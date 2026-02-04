@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KYLRA — Luxury Streetwear</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header>
+    <div class="nav">
+        <div class="logo">KYLRA</div>
+        <nav>
+            <ul>
+                <li>Home</li>
+                <li>Shop</li>
+                <li class="cart-icon" onclick="toggleCart()">
+                    Cart
+                    <span class="cart-count" id="cart-count">0</span>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<section class="hero">
+    <h1>THE FUTURE OF <span>STREET LUXURY</span></h1>
+    <p>Exclusive sneakers. Elevated essentials.</p>
+</section>
+
+<section class="products">
+    <div class="product-grid">
+        <div class="card">
+            <img src="https://via.placeholder.com/400x400" alt="Nike Air Force 1">
+            <div class="card-content">
+                <h3>Nike Air Force 1</h3>
+                <div class="price">$120</div>
+                <button onclick="addToCart('Nike Air Force 1', 120)">Add to Cart</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <img src="https://via.placeholder.com/400x400" alt="Apple AirPods">
+            <div class="card-content">
+                <h3>Apple AirPods</h3>
+                <div class="price">$159</div>
+                <button onclick="addToCart('Apple AirPods', 159)">Add to Cart</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <img src="https://via.placeholder.com/400x400" alt="Nike Socks">
+            <div class="card-content">
+                <h3>Nike Premium Socks</h3>
+                <div class="price">$18</div>
+                <button onclick="addToCart('Nike Premium Socks', 18)">Add to Cart</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Cart Panel -->
+<div class="cart-panel" id="cart">
+    <h2>Your Cart</h2>
+    <div id="cart-items"></div>
+    <div class="cart-total" id="cart-total">Total: $0</div>
+    <button class="checkout">Checkout</button>
+</div>
+
+<footer>
+    © 2026 KYLRA — All Rights Reserved
+</footer>
+
+<!-- JavaScript -->
+<script>
+let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+function toggleCart() {
+    document.getElementById('cart').classList.toggle('active');
+}
+
+function addToCart(name, price) {
+    const item = cart.find(i => i.name === name);
+    if (item) item.qty++;
+    else cart.push({ name, price, qty: 1 });
+    saveCart();
+}
+
+function changeQty(name, delta) {
+    const item = cart.find(i => i.name === name);
+    item.qty += delta;
+    if (item.qty <= 0) {
+        cart = cart.filter(i => i.name !== name);
+    }
+    saveCart();
+}
+
+function saveCart() {
+    localStorage.setItem('cart', JSON.stringify(cart));
+    renderCart();
+}
+
+function renderCart() {
+    const items = document.getElementById('cart-items');
+    const totalEl = document.getElementById('cart-total');
+    const countEl = document.getElementById('cart-count');
+
+    items.innerHTML = '';
+    let total = 0;
+    let count = 0;
+
+    cart.forEach(item => {
+        total += item.price * item.qty;
+        count += item.qty;
+
+        items.innerHTML += `
+            <div class="cart-item">
+                <div>
+                    ${item.name}<br>
+                    <span class="price">$${item.price}</span>
+                </div>
+                <div class="qty-controls">
+                    <button onclick="changeQty('${item.name}', -1)">−</button>
+                    ${item.qty}
+                    <button onclick="changeQty('${item.name}', 1)">+</button>
+                </div>
+            </div>
+        `;
+    });
+
+    totalEl.textContent = `Total: $${total}`;
+    countEl.textContent = count;
+}
+
+renderCart();
+</script>
+
+</body>
+</html>
+
