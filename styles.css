@@ -56,22 +56,3 @@ select {
 }
 
 .toast.show { opacity: 1; }
-
-.modal {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.8);
-    display: none;
-    align-items: center;
-    justify-content: center;
-}
-
-.modal.active { display: flex; }
-
-.modal-content {
-    background: #111;
-    padding: 2rem;
-    border-radius: 10px;
-    width: 90%;
-    max-width: 400px;
-}
