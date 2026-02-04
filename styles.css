@@ -231,3 +231,38 @@ select {
     background: #333;
     color: #fff;
 }
+
+/* ADDITIONS ONLY */
+
+.toast {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #c9a24d;
+    color: #000;
+    padding: 0.8rem 1.2rem;
+    border-radius: 6px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.toast.show { opacity: 1; }
+
+.modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.8);
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal.active { display: flex; }
+
+.modal-content {
+    background: #111;
+    padding: 2rem;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 400px;
+}
