@@ -1,0 +1,143 @@
+const grid = document.getElementById("product-grid");
+const cartPanel = document.getElementById("cart");
+const cartItems = document.getElementById("cart-items");
+const cartCount = document.getElementById("cart-count");
+const cartTotal = document.getElementById("cart-total");
+const toast = document.getElementById("toast");
+
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+/* ---------- UI HELPERS ---------- */
+function showToast(msg) {
+    toast.textContent = msg;
+    toast.classList.add("show");
+    setTimeout(() => toast.classList.remove("show"), 2500);
+}
+
+/* ---------- PRODUCT RENDER ---------- */
+products.forEach(p => {
+    const card = document.createElement("div");
+    card.className = "card";
+
+    card.innerHTML = `
+        <img src="${p.image}">
+        <div class="card-content">
+            <h3>${p.name}</h3>
+            <div class="price">$${p.price}</div>
+            ${p.sizes ? `
+                <select>
+                    <option value="">Select size</option>
+                    ${Object.keys(p.sizes).map(s => `
+                        <option value="${s}" ${p.sizes[s] === 0 ? "disabled" : ""}>
+                            ${s} ${p.sizes[s] === 0 ? "(Sold Out)" : ""}
+                        </option>`).join("")}
+                </select>
+            ` : ""}
+            <button data-id="${p.id}">Add to Cart</button>
+        </div>
+    `;
+    grid.appendChild(card);
+});
+
+/* ---------- EVENTS ---------- */
+document.getElementById("cart-toggle").onclick = () =>
+    cartPanel.classList.toggle("active");
+
+grid.addEventListener("click", e => {
+    if (!e.target.matches("button")) return;
+
+    const card = e.target.closest(".card");
+    const id = +e.target.dataset.id;
+    const product = products.find(p => p.id === id);
+    const select = card.querySelector("select");
+    const size = select ? select.value : null;
+
+    if (product.sizes && !size) {
+        showToast("Select a size");
+        return;
+    }
+
+    if (product.sizes && product.sizes[size] === 0) {
+        showToast("Size out of stock");
+        return;
+    }
+
+    addToCart(product, size);
+});
+
+/* ---------- CART ---------- */
+function addToCart(product, size) {
+    const item = cart.find(i => i.id === product.id && i.size === size);
+
+    if (item) item.qty++;
+    else cart.push({ id: product.id, name: product.name, price: product.price, size, qty: 1 });
+
+    if (product.sizes) product.sizes[size]--;
+
+    saveCart();
+    showToast("Added to cart");
+}
+
+function saveCart() {
+    localStorage.setItem("cart", JSON.stringify(cart));
+    renderCart();
+}
+
+function renderCart() {
+    cartItems.innerHTML = "";
+    let total = 0;
+    let count = 0;
+
+    cart.forEach((item, i) => {
+        total += item.price * item.qty;
+        count += item.qty;
+
+        const div = document.createElement("div");
+        div.className = "cart-item";
+        div.innerHTML = `
+            <div>
+                ${item.name}<br>
+                ${item.size ? `Size: ${item.size}` : ""}
+            </div>
+            <div>
+                <button data-i="${i}" data-d="-1">−</button>
+                ${item.qty}
+                <button data-i="${i}" data-d="1">+</button>
+            </div>
+        `;
+        cartItems.appendChild(div);
+    });
+
+    cartTotal.textContent = `Total: $${total}`;
+    cartCount.textContent = count;
+}
+
+cartItems.addEventListener("click", e => {
+    if (!e.target.dataset.i) return;
+
+    const i = +e.target.dataset.i;
+    const delta = +e.target.dataset.d;
+    cart[i].qty += delta;
+
+    if (cart[i].qty <= 0) cart.splice(i, 1);
+    saveCart();
+});
+
+/* ---------- CHECKOUT ---------- */
+document.getElementById("checkout-btn").onclick = () => {
+    document.getElementById("checkout-modal").classList.add("active");
+    document.getElementById("checkout-summary").innerHTML =
+        cart.map(i => `${i.name} (${i.size || "One Size"}) x${i.qty}`).join("<br>");
+};
+
+document.getElementById("place-order").onclick = () => {
+    cart = [];
+    saveCart();
+    showToast("Order placed successfully");
+    document.getElementById("checkout-modal").classList.remove("active");
+};
+
+document.querySelector(".close-modal").onclick = () =>
+    document.getElementById("checkout-modal").classList.remove("active");
+
+renderCart();
