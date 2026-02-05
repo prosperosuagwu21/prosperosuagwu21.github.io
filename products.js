@@ -4,6 +4,7 @@ const products = [
         name: "Nike Air Force 1",
         price: 120,
         image: "https://via.placeholder.com/400",
+        category: "sneakers",
         sizes: {
             "7": 5, "8": 3, "9": 4, "10": 2, "11": 3, "12": 1, "13": 2
         }
@@ -14,6 +15,7 @@ const products = [
         price: 159,
         image: "https://via.placeholder.com/400",
         sizes: null,
+        category: "tech",
         stock: 10
     },
     {
@@ -21,8 +23,10 @@ const products = [
         name: "Nike Premium Socks",
         price: 18,
         image: "https://via.placeholder.com/400",
+        category: "accessories",
         sizes: {
             "S": 6, "M": 8, "L": 4
         }
     }
+
 ];
