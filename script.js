@@ -6,6 +6,8 @@ const cartTotal = document.getElementById("cart-total");
 const toast = document.getElementById("toast");
 
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
+renderProducts();
+
 
 /* ---------- UI HELPERS ---------- */
 function showToast(msg) {
@@ -108,6 +110,7 @@ function addToCart(product, size) {
     else cart.push({ id: product.id, name: product.name, price: product.price, size, qty: 1 });
 
     if (product.sizes) product.sizes[size]--;
+    animateBadge();
 
     saveCart();
     showToast("Added to cart");
@@ -194,3 +197,8 @@ const sortPrice = document.getElementById("sort-price");
 [searchInput, categoryFilter, sortPrice].forEach(el =>
     el.addEventListener("input", renderProducts)
 );
+
+function animateBadge() {
+    cartCount.classList.add("pop");
+    setTimeout(() => cartCount.classList.remove("pop"), 200);
+}
