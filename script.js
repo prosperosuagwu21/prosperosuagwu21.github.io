@@ -15,29 +15,64 @@ function showToast(msg) {
 }
 
 /* ---------- PRODUCT RENDER ---------- */
-products.forEach(p => {
-    const card = document.createElement("div");
-    card.className = "card";
+function renderProducts() {
+    grid.innerHTML = "";
 
-    card.innerHTML = `
-        <img src="${p.image}">
-        <div class="card-content">
-            <h3>${p.name}</h3>
-            <div class="price">$${p.price}</div>
-            ${p.sizes ? `
-                <select>
-                    <option value="">Select size</option>
-                    ${Object.keys(p.sizes).map(s => `
-                        <option value="${s}" ${p.sizes[s] === 0 ? "disabled" : ""}>
-                            ${s} ${p.sizes[s] === 0 ? "(Sold Out)" : ""}
-                        </option>`).join("")}
-                </select>
-            ` : ""}
-            <button data-id="${p.id}">Add to Cart</button>
-        </div>
-    `;
-    grid.appendChild(card);
-});
+    let filtered = [...products];
+
+    // Search
+    const q = searchInput.value.toLowerCase();
+    filtered = filtered.filter(p => p.name.toLowerCase().includes(q));
+
+    // Category
+    if (categoryFilter.value !== "all") {
+        filtered = filtered.filter(p => p.category === categoryFilter.value);
+    }
+
+    // Sort
+    if (sortPrice.value === "low") {
+        filtered.sort((a,b) => a.price - b.price);
+    }
+    if (sortPrice.value === "high") {
+        filtered.sort((a,b) => b.price - a.price);
+    }
+
+    if (!filtered.length) {
+        grid.innerHTML = `<p class="empty">No products found</p>`;
+        return;
+    }
+
+    filtered.forEach(p => {
+        const card = document.createElement("div");
+        card.className = "card";
+
+        const sizes = p.sizes
+            ? `<select>
+                <option value="">Select size</option>
+                ${Object.keys(p.sizes).map(s =>
+                    `<option ${p.sizes[s] === 0 ? "disabled" : ""}>${s}</option>`
+                ).join("")}
+               </select>`
+            : "";
+
+        card.innerHTML = `
+            <button class="wish" aria-label="Wishlist"
+                onclick="toggleWishlist(${p.id})">
+                ${wishlist.includes(p.id) ? "♥" : "♡"}
+            </button>
+
+            <img src="${p.image}">
+            <div class="card-content">
+                <h3>${p.name}</h3>
+                <div class="price">$${p.price}</div>
+                ${sizes}
+                <button data-id="${p.id}">Add to Cart</button>
+            </div>
+        `;
+        grid.appendChild(card);
+    });
+}
+
 
 /* ---------- EVENTS ---------- */
 document.getElementById("cart-toggle").onclick = () =>
