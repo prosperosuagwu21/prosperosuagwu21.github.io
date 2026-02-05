@@ -141,3 +141,13 @@ document.querySelector(".close-modal").onclick = () =>
     document.getElementById("checkout-modal").classList.remove("active");
 
 renderCart();
+let wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+
+function toggleWishlist(id) {
+    wishlist.includes(id)
+        ? wishlist = wishlist.filter(x => x !== id)
+        : wishlist.push(id);
+
+    localStorage.setItem("wishlist", JSON.stringify(wishlist));
+    renderProducts();
+}
