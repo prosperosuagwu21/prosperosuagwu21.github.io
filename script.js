@@ -151,3 +151,11 @@ function toggleWishlist(id) {
     localStorage.setItem("wishlist", JSON.stringify(wishlist));
     renderProducts();
 }
+
+const searchInput = document.getElementById("search");
+const categoryFilter = document.getElementById("category-filter");
+const sortPrice = document.getElementById("sort-price");
+
+[searchInput, categoryFilter, sortPrice].forEach(el =>
+    el.addEventListener("input", renderProducts)
+);
