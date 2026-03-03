@@ -1,113 +1,451 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>My Vibrant Article Page</title>
-
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>The Ultimate Hair Care Guide</title>
   <style>
-    /* --- Global Styles --- */
-    body {
-      margin: 0;
-      font-family: "Poppins", Arial, sans-serif;
-      background: linear-gradient(135deg, #ffecd2, #fcb69f);
-      color: #333;
+    :root{
+      --bg:#f6f7f9;
+      --card:#ffffff;
+      --muted:#6b7280;
+      --accent:#0ea5a4;
+      --accent-2:#06b6d4;
+      --shadow: 0 6px 18px rgba(15,23,42,0.08);
+      --radius:12px;
+      --max-width:900px;
+      --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
     }
 
-    /* --- Header --- */
-    header {
-      background: #ff6f61;
-      color: white;
-      padding: 2rem 1rem;
-      text-align: center;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    html,body{
+      height:100%;
+      margin:0;
+      font-family:var(--font-sans);
+      background:linear-gradient(180deg, #f8fafc 0%, var(--bg) 100%);
+      color:#0f172a;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
     }
 
-    header h1 {
-      margin: 0;
-      font-size: 2.5rem;
-      letter-spacing: 1px;
+    .container{
+      max-width:var(--max-width);
+      margin:48px auto;
+      padding:28px;
     }
 
-    /* --- Main Article Container --- */
-    main {
-      max-width: 900px;
-      margin: 3rem auto;
-      background: white;
-      padding: 2.5rem;
-      border-radius: 15px;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-      animation: fadeIn 1s ease;
+    .card{
+      background:var(--card);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      display:grid;
+      grid-template-columns: 1fr 320px;
+      gap:28px;
+      align-items:start;
+      padding:28px;
     }
 
-    /* --- Article Typography --- */
-    article h1 {
-      font-size: 2rem;
-      margin-top: 0;
-      color: #ff6f61;
+    /* Responsive */
+    @media (max-width:880px){
+      .card{ grid-template-columns: 1fr; padding:20px; }
+      .meta-right{ order: -1; }
     }
 
-    article p {
-      font-size: 1.1rem;
-      line-height: 1.7;
-      margin-bottom: 1.2rem;
+    /* Left column (article) */
+    .article-header{
+      display:flex;
+      gap:16px;
+      align-items:flex-start;
     }
 
-    article p strong {
-      color: #444;
+    .badges{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      margin-bottom:10px;
     }
 
-    /* --- Footer --- */
-    footer {
-      text-align: center;
-      padding: 1.5rem;
-      color: #444;
-      font-size: 0.95rem;
-      margin-top: 3rem;
+    .badge{
+      background:#eef2f7;
+      color:var(--muted);
+      font-size:12px;
+      padding:6px 10px;
+      border-radius:999px;
+      letter-spacing:0.2px;
     }
 
-    /* --- Animation --- */
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
+    h1{
+      margin:0 0 8px 0;
+      font-size:28px;
+      line-height:1.15;
+      letter-spacing:-0.2px;
+    }
+
+    .byline{
+      display:flex;
+      gap:12px;
+      align-items:center;
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    .avatar{
+      width:44px;
+      height:44px;
+      border-radius:50%;
+      background:linear-gradient(135deg,var(--accent),var(--accent-2));
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      color:white;
+      font-weight:600;
+      font-size:14px;
+      flex:0 0 44px;
+    }
+
+    .meta-row{
+      display:flex;
+      gap:12px;
+      align-items:center;
+      margin-top:8px;
+      color:var(--muted);
+      font-size:13px;
+    }
+
+    .hero{
+      margin:18px 0 22px 0;
+      border-radius:10px;
+      overflow:hidden;
+      box-shadow:0 8px 20px rgba(2,6,23,0.06);
+    }
+
+    .hero img{
+      width:100%;
+      height:260px;
+      object-fit:cover;
+      display:block;
+    }
+
+    .content{
+      font-size:16px;
+      line-height:1.7;
+      color:#0b1220;
+    }
+
+    .content p{ margin:0 0 14px 0; }
+
+    .section-title{
+      margin:18px 0 8px 0;
+      font-weight:700;
+      font-size:18px;
+      color:#0b1220;
+    }
+
+    blockquote{
+      margin:14px 0;
+      padding:14px 18px;
+      background:#f1f8f7;
+      border-left:4px solid var(--accent);
+      border-radius:8px;
+      color:#064e4b;
+      font-style:italic;
+    }
+
+    ul{
+      margin:0 0 14px 18px;
+      padding:0;
+    }
+
+    li{
+      margin:8px 0;
+    }
+
+    /* Right column (meta / stats) */
+    .meta-right{
+      background:linear-gradient(180deg,#ffffff,#fbfdff);
+      border-radius:10px;
+      padding:18px;
+      box-shadow:0 6px 16px rgba(2,6,23,0.04);
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+      align-self:start;
+    }
+
+    .meta-item{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    .read-time{
+      background:#eef9f9;
+      color:#065f5b;
+      padding:6px 10px;
+      border-radius:999px;
+      font-weight:600;
+      font-size:13px;
+    }
+
+    .share{
+      display:flex;
+      gap:8px;
+    }
+
+    .tag-list{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+    }
+
+    .tag{
+      background:#f3f6fb;
+      color:#0b3a66;
+      padding:6px 10px;
+      border-radius:999px;
+      font-size:13px;
+    }
+
+    footer.article-footer{
+      margin-top:20px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      color:var(--muted);
+      font-size:13px;
+    }
+
+    .cta{
+      background:var(--accent);
+      color:white;
+      padding:10px 14px;
+      border-radius:10px;
+      font-weight:600;
+      text-decoration:none;
+      font-size:14px;
+      border: none;
+      cursor: pointer;
+    }
+
+    /* copy button variant */
+    .copy-btn{
+      background:var(--accent);
+      color:white;
+      padding:10px 14px;
+      border-radius:10px;
+      font-weight:600;
+      font-size:14px;
+      border: none;
+      cursor: pointer;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+    }
+
+    .copy-btn:disabled{
+      opacity:0.7;
+      cursor:default;
+    }
+
+    /* small helper */
+    .muted{ color:var(--muted); font-size:13px; }
+
+    /* visually-hidden for live region */
+    .visually-hidden{
+      position:absolute;
+      width:1px;
+      height:1px;
+      padding:0;
+      margin:-1px;
+      overflow:hidden;
+      clip:rect(0 0 0 0);
+      white-space:nowrap;
+      border:0;
     }
   </style>
 </head>
-
 <body>
+  <main class="container" role="main">
+    <article class="card" aria-labelledby="article-title">
+      <!-- Left: Article content -->
+      <div>
+        <div class="article-header">
+          <div style="flex:1">
+            <div class="badges" aria-hidden="true">
+              <span class="badge">Leave-in treatments</span>
+              <span class="badge">Hair growth</span>
+            </div>
 
-  <header>
-    <h1>My Vibrant Blog</h1>
-  </header>
+            <h1 id="article-title">The Ultimate Hair Care Guide</h1>
 
-  <main>
-    <article>
-      <h1>The Beauty of Simple Webpages</h1>
-      <p><strong>Published:</strong> March 1, 2026</p>
+            <div class="byline" aria-label="Author and publish info">
+              <div class="avatar" aria-hidden="true">IS</div>
+              <div>
+                <div style="font-weight:700">Isabella Grant</div>
+                <div class="muted">Published 1 March 2026 · <span class="read-time" style="display:inline-block; margin-left:8px;">4 min read</span></div>
+              </div>
+            </div>
 
-      <p>
-        A simple webpage can still feel alive and expressive. With thoughtful colours,
-        smooth shadows, and clean typography, even a single article layout can feel
-        modern and inviting.
-      </p>
+            <div class="meta-row" style="margin-top:12px;">
+              <div class="muted">Expert: Dr. Francesca Fusco</div>
+            </div>
+          </div>
+        </div>
 
-      <p>
-        Vibrant design doesn’t require complexity—just a few well‑chosen styles.
-        A warm gradient, rounded corners, and subtle animation can transform a plain
-        page into something memorable.
-      </p>
+        <figure class="hero" role="img" aria-label="Two people jogging along a waterfront path">
+          <!-- Replace src with your image path -->
+          <img src="hero-image.jpg" alt="Two people jogging along a waterfront path lined with lamp posts">
+        </figure>
 
-      <p>
-        As you continue exploring HTML and CSS, you’ll discover how small touches
-        can dramatically improve the user experience while keeping your code clean
-        and approachable.
-      </p>
+        <div class="content">
+          <p>Life as an adult is full. You’re building a career, maintaining relationships, staying active, managing stress, and somehow trying to look put together through it all. In the middle of that busy rhythm, hair care can either feel overwhelming or completely forgotten. The truth is, healthy hair doesn’t require a complicated 12-step routine. It requires consistency, smart product choices, and a little attention to your scalp and daily habits. With the right approach, you can reduce breakage, control frizz, manage oil, and protect against thinning or heat damage — all without spending hours in front of the mirror.</p>
+
+          <h3 class="section-title">Start With Your Scalp</h3>
+          <p>For women, everything starts at the scalp. Your scalp is skin, and just like the skin on your face, it needs proper cleansing and circulation to stay healthy. Washing your hair two to four times a week works well for most people, depending on oil production and activity level. When you shampoo, take a full minute to massage your scalp rather than quickly scrubbing and rinsing. A tool like the <a href="https://amzn.to/4b2SFt5">Umberto Giannini Stimulating Scalp Massager</a> can help stimulate circulation while gently lifting buildup. If you use styling products regularly, clarifying once every few weeks keeps the scalp balanced and prevents dullness.</p>
+          <blockquote>“It is essential to give our scalp as much TLC as we give to our skin because after all, scalp is skin” — Dr. Francesca Fusco</blockquote>
+
+          <h3 class="section-title">Build a Routine That Works</h3>
+          <p>Conditioning is where many people either overdo it or skip it entirely. Conditioner should focus on the mid-lengths and ends, where dryness and damage show up first. If shine and softness are your goal, <a href="https://amzn.to/4b3Cmw0">L'Oreal Paris Glossing Conditioner</a> helps smooth and enhance natural luster. For lighter shades, blonde, or silver tones, <a href="https://amzn.to/3Nca1fa">L'Oreal Paris Silver Care Conditioner</a> can help maintain brightness and reduce dullness. If your hair feels dry, brittle, or stressed from coloring or heat, <a href="https://amzn.to/4rb3QWC">Alterna Anti-Aging Conditioner</a> offers deeper nourishment. For those who want lightweight hydration without heaviness, <a href="https://amzn.to/4rMlr8m">Garnier Honey Water Conditioner</a> provides moisture that won’t weigh hair down. And if you’re maintaining cool-toned color, <a href="https://amzn.to/4cYaDiU">Matrix Protecting Blue Toning Conditioner</a> helps keep unwanted brassiness under control while conditioning at the same time.</p>
+
+          <h3 class="section-title">Deep Care and Treatments</h3>
+          <p>Beyond regular washing and conditioning, strengthening treatments make a visible difference, especially if you color your hair or use heat tools often. Hair bonds weaken over time due to chemical processing and high temperatures. <a href="https://amzn.to/3OWmT9E">LIW pH Plex Bonding Treatment</a> helps reinforce those internal bonds, reducing breakage and improving resilience. If frizz is your main concern, particularly in humid weather, <a href="https://amzn.to/4cpXsXP">VIRTUE Anti-Frizz Treatment</a> smooths flyaways and adds polish without making hair stiff or greasy. Incorporating a deep treatment once a week can restore softness and help prevent long-term damage.</p>
+
+          <h3 class="section-title">Heat and Styling Protection</h3>
+          <p>Heat styling deserves special attention. Sleek straight hair and soft curls are popular for a reason, but repeated exposure to high temperatures can thin and weaken strands over time. Whenever possible, allow hair to air-dry partially before using tools and keep heat settings moderate rather than maxed out. Products designed to prep and protect hair before styling, such as the <a href="https://amzn.to/3N0JQrN">MONDAY SMOOTH Duo</a>, can help reduce friction and improve manageability during blow-drying or straightening. Small habits, like never straightening soaking-wet hair and trimming every couple of months, dramatically reduce split ends and breakage.</p>
+
+          <h3 class="section-title">Common Concerns and What to Do</h3>
+          <p>Common concerns for women in this age group include thinning, frizz, oily roots, and dryness from coloring. Thinning can be linked to stress, hormones, tight hairstyles, or nutritional gaps. Reducing constant tension from tight ponytails and incorporating scalp massage can support healthier growth conditions. Frizz usually signals dehydration, so consistent conditioning and smoothing treatments help. Oily scalps benefit from balanced washing rather than aggressive daily shampooing, which can trigger even more oil production. Color-treated hair simply requires gentler care and regular moisture to maintain vibrancy.</p>
+          
+          <h3 class="section-title">Washing Smart for Men</h3>
+          <p>For men, hair care is often simpler but just as important. Washing three to five times a week with a gentle shampoo is usually sufficient, especially if styling products are used daily. Massaging the scalp thoroughly during washing helps maintain circulation and remove buildup, and tools like the <a href="https://amzn.to/4b2SFt5">Umberto Giannini Stimulating Scalp Massager</a> are just as effective for shorter styles. Conditioner should not be skipped, even on short hair, as it prevents dryness and brittleness. A lightweight option such as <a href="https://amzn.to/4rMlr8m">Garnier Honey Water Conditioner</a> keeps hair soft without flattening it.</p>
+
+          <h3 class="section-title">Styling Without Damage</h3>
+          <p>Styling practices matter for men as well. Heavy gels and waxes can create buildup and scalp congestion if not washed out properly. Choosing lighter styling creams and cleansing thoroughly before bed keeps hair healthier long term. For textured or curl-defined looks, a <a href="https://amzn.to/4sjNQT0">Magic Barber Sponge Twist Brush</a> helps shape curls without excessive product use or heat. When it comes to thinning or receding hairlines, which commonly begin in the twenties or thirties, early care makes a difference. Maintaining scalp health, managing stress, and avoiding constant tight hats or friction can help preserve density. If thinning appears sudden or severe, consulting a professional is wise.</p>
+          
+          <h3 class="section-title">Healthy Hair</h3>
+          <p>Across both women and men, nutrition plays a larger role than many realize. Hair is made primarily of protein, so adequate intake of protein-rich foods supports strength and growth. Iron, omega-3 fatty acids, and overall hydration also contribute to shine and resilience. No product can fully compensate for poor nutrition or chronic stress, so healthy lifestyle habits are part of any effective hair routine.</p>
+          
+          <h3 class="section-title">Products We Mentioned</h3>
+          <ul>
+            <li><strong>Conditioners</strong> — <a href="https://amzn.to/4b3Cmw0">L'Oreal Paris Glossing Conditioner</a>, <a href="https://amzn.to/3Nca1fa">L'Oreal Paris Silver Care Conditioner</a>, <a href="https://amzn.to/4rb3QWC">Alterna Anti-Aging Conditioner</a>, <a href="https://amzn.to/4rMlr8m">Garnier Honey Water Conditioner</a>, <a href="https://amzn.to/4cYaDiU">Matrix Protecting Blue Toning Conditioner</a>, <a href="https://amzn.to/3N0JQrN">MONDAY SMOOTH Duo</a></li>
+            <li><strong>Scalp Products</strong> — <a href="https://amzn.to/4b2SFt5">Umberto Giannini Stimulating Scalp Massager</a>, <a href="https://amzn.to/4sjNQT0">Magic Barber Sponge Twist Brush</a></li>
+            <li><strong>Strengthening Treatments</strong> — <a href="https://amzn.to/3OWmT9E">LIW pH Plex Bonding Treatment</a>, <a href="https://amzn.to/4cpXsXP">VIRTUE Anti-Frizz Treatment</a></li>
+          </ul>
+
+          <h3 class="section-title">Conclusion</h3>
+          <p>Ultimately, great hair is less about perfection and more about consistency. You do not need dozens of products or complicated rituals. You need thoughtful cleansing, proper conditioning, occasional strengthening treatments, moderate heat use, and attention to your scalp.</p>
+
+          <p style="margin-top:18px;">As an adult, life changes quickly, but a steady, realistic hair care routine will carry you through every stage. When you treat your hair with patience and care, it reflects that effort back in shine, strength, and confidence.
+</p>
+
+          <footer class="article-footer" aria-label="Article footer">
+            <div class="muted">Tags: <span style="color:#0b1220; font-weight:600;">hair</span>, <span style="color:#0b1220; font-weight:600;">scalp</span></div>
+
+            <!-- Replaced the anchor share link with a copy-to-clipboard button -->
+            <div>
+              <button id="copyLinkBtn" class="copy-btn" aria-describedby="copyStatus">Copy link</button>
+              <span id="copyStatus" class="visually-hidden" aria-live="polite"></span>
+            </div>
+          </footer>
+        </div>
+      </div>
+
+      <!-- Right: Meta / sidebar -->
+      <aside class="meta-right" aria-label="Article metadata">
+        <div style="display:flex;flex-direction:column;gap:6px;">
+          <div class="meta-item">
+            <div class="muted">Author</div>
+            <div style="font-weight:700">Isabella Grant</div>
+          </div>
+
+          <div class="meta-item">
+            <div class="muted">Published</div>
+            <div>1 March 2026</div>
+          </div>
+
+          <div class="meta-item">
+            <div class="muted">Reading time</div>
+            <div class="read-time">4 min</div>
+          </div>
+        </div>
+
+        <hr style="border:none;border-top:1px solid #eef2f7;margin:8px 0;">
+
+        <div>
+          <div class="muted" style="margin-bottom:8px;">Quick tips</div>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <div style="font-size:14px;">• Focus on Scalp Health.</div>
+            <div style="font-size:14px;">• Don’t Overwash Your Hair.</div>
+            <div style="font-size:14px;">• Protect Your Hair from Heat.</div>
+          </div>
+        </div>
+
+        <hr style="border:none;border-top:1px solid #eef2f7;margin:8px 0;">
+
+        <div>
+          <div class="muted" style="margin-bottom:8px;">Categories</div>
+          <div class="tag-list">
+            <span class="tag">Scalp treatments</span>
+            <span class="tag">Hair growth</span>
+            <span class="tag">Leave-in treatments</span>
+          </div>
+        </div>
+      </aside>
     </article>
   </main>
 
-  <footer>
-    &copy; 2026 My Vibrant Blog. All rights reserved.
-  </footer>
+  <script>
+    (function () {
+      const btn = document.getElementById('copyLinkBtn');
+      const status = document.getElementById('copyStatus');
 
+      async function copyToClipboard(text) {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          return navigator.clipboard.writeText(text);
+        }
+        // Fallback for older browsers
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.position = 'fixed';
+        ta.style.left = '-9999px';
+        document.body.appendChild(ta);
+        ta.select();
+        try {
+          document.execCommand('copy');
+          document.body.removeChild(ta);
+          return Promise.resolve();
+        } catch (err) {
+          document.body.removeChild(ta);
+          return Promise.reject(err);
+        }
+      }
+
+      btn.addEventListener('click', async () => {
+        const pageUrl = location.href;
+        btn.disabled = true;
+        const originalLabel = btn.textContent;
+        try {
+          await copyToClipboard(pageUrl);
+          btn.textContent = 'Link copied!';
+          status.textContent = 'Page link copied to clipboard.';
+        } catch (err) {
+          btn.textContent = 'Copy failed';
+          status.textContent = 'Copy failed; the URL is shown so you can copy it manually.';
+          // Last resort: show prompt for manual copy
+          // eslint-disable-next-line no-alert
+          window.prompt('Copy the URL below', pageUrl);
+        } finally {
+          setTimeout(() => {
+            btn.textContent = originalLabel;
+            btn.disabled = false;
+            status.textContent = '';
+          }, 2000);
+        }
+      });
+    })();
+  </script>
 </body>
 </html>
-
