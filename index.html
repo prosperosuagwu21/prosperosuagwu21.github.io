@@ -173,15 +173,15 @@
       <div class="grid-2">
         <div>
           <h4 style="margin:6px 0">Shipping address</h4>
-          <label>Full name<input type="text" id="name" required></label>
-          <label>Street address<input type="text" id="address" required></label>
+          <label>Full name<input type="text" name="Full name" id="name" required></label>
+          <label>Street address<input type="text" name="Street address" id="address" required></label>
           <div class="row">
-            <label style="flex:1">City<input type="text" id="city" required></label>
-            <label style="flex:1">State / Province / County<input type="text" id="state" required></label>
+            <label style="flex:1">City<input type="text" name="City" id="city" required></label>
+            <label style="flex:1">State / Province / County<input type="text" name="State / Province / County" id="state" required></label>
           </div>
-          <label>Zip / Postal code<input type="text" id="zip" required></label>
+          <label>Zip / Postal code<input type="text" name="Postal code" id="zip" required></label>
           <label>Country
-            <select id="country" required>
+            <select id="country" name="country" required>
               <option value="UK">United Kingdom</option>
               <option value="US">United States</option>
               <option value="CA">Canada</option>
@@ -190,15 +190,15 @@
           <div style="display:flex;gap:8px;margin-top:8px">
             <label style="width:36%">
               Country code
-              <select id="countryCode" required>
+              <select id="countryCode" name="Country code" required>
                 <option value="+44">+44 (UK)</option>
                 <option value="+1">+1 (US/CA)</option>
               </select>
             </label>
-            <label style="flex:1">Phone number<input type="tel" id="phone" placeholder="e.g., 712345678" required></label>
+            <label style="flex:1">Phone number<input type="tel" name="Phone number" id="phone" placeholder="e.g., 712345678" required></label>
           </div>
           <!-- Email field added under phone as requested -->
-          <label style="margin-top:8px">Email address<input type="email" id="email" placeholder="you@example.com" required></label>
+          <label style="margin-top:8px">Email address<input type="email" name="Email address" id="email" placeholder="you@example.com" required></label>
 
           <!-- Shipping note added as requested: shows shipping time on checkout page -->
           <div class="shipping-note" role="status" aria-live="polite">
@@ -215,11 +215,11 @@
 
         <div>
           <h4 style="margin:6px 0">Payment</h4>
-          <label>Cardholder name<input type="text" id="cardName" required></label>
-          <label>Card number<input type="text" id="cardNumber" placeholder="4242 4242 4242 4242" required></label>
+          <label>Cardholder name<input type="text" name="Cardholder name" id="cardName" required></label>
+          <label>Card number<input type="text" name="Card number" id="cardNumber" placeholder="4242 4242 4242 4242" required></label>
           <div class="row">
-            <label style="flex:1">Expiry<input type="text" id="cardExp" placeholder="MM/YY" required></label>
-            <label style="flex:1">CVC<input type="text" id="cardCvc" placeholder="123" required></label>
+            <label style="flex:1">Expiry<input type="text" name="Expiry" id="cardExp" placeholder="MM/YY" required></label>
+            <label style="flex:1">CVC<input type="text" name="CVC" id="cardCvc" placeholder="123" required></label>
           </div>
           <label class="muted">Secure checkout</label>
         </div>
